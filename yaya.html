@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KrishiSahay · AI for Farmers · Fully Workable</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4fdf7;
+      color: #1b3a1b;
+      overflow-x: hidden;
+    }
+    :root {
+      --primary: #0e6b2e;
+      --primary-dark: #094f20;
+      --primary-light: #4bb56b;
+      --secondary: #f4b740;
+      --glass: rgba(255, 255, 255, 0.3);
+      --glass-border: rgba(255, 255, 255, 0.5);
+      --shadow: 0 25px 50px -12px rgba(0, 80, 20, 0.25);
+      --transition: all 0.3s ease;
+    }
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+    .section-title {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(145deg, #0d5927, #238c47);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.2rem;
+      color: #0e6b2e; /* fallback */
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      padding: 0.9rem 2.2rem;
+      border-radius: 3rem;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 8px 20px -8px var(--primary);
+    }
+    .btn:hover { background: var(--primary-dark); transform: scale(1.02); }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      box-shadow: none;
+    }
+    .btn-outline:hover { background: var(--primary); color: white; }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 1.5rem;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 2rem;
+      margin: 1rem 2.5rem;
+      border-radius: 60px;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 15px 35px -10px rgba(0, 70, 20, 0.15);
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0f622b, #3ca861);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: #0f622b;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      font-weight: 600;
+      color: #175026;
+    }
+    .nav-links a {
+      transition: 0.2s;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.2s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover { color: #1f8a42; }
+
+    /* Language switcher */
+    .lang-select {
+      background: white;
+      border-radius: 3rem;
+      padding: 0.4rem 1.2rem;
+      border: 1px solid #b8dcb8;
+      font-weight: 500;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Hero */
+    .hero {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 3rem;
+      margin: 3rem 0 4rem;
+    }
+    .hero-content { flex: 1 1 500px; }
+    .hero h1 {
+      font-size: 4.2rem;
+      font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(to right, #0d5926, #279b4c, #0e622a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: #0d5926;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: #236935;
+      max-width: 550px;
+      margin: 1.5rem 0;
+    }
+    .search-panel {
+      background: white;
+      border-radius: 60px;
+      padding: 0.3rem;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 20px 40px -20px #186632;
+      border: 1px solid #c0e0c0;
+    }
+    .search-panel i { color: #1f7a39; font-size: 1.3rem; margin-left: 1.5rem; }
+    .search-panel input {
+      flex: 1;
+      border: none;
+      padding: 1rem 1rem;
+      font-size: 1rem;
+      background: transparent;
+      outline: none;
+    }
+    .search-panel button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.9rem 2.4rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .voice-btn {
+      background: var(--secondary);
+      border: none;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      color: #1f3f1f;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .voice-btn:hover { background: #f8c55c; transform: scale(1.05); }
+
+    /* Hero response area */
+    .hero-response {
+      margin-top: 2rem;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+      border-radius: 2rem;
+      padding: 1.5rem;
+      border-left: 6px solid var(--primary);
+      position: relative;
+    }
+    .speaker-btn {
+      background: transparent;
+      border: none;
+      color: var(--primary);
+      font-size: 1.3rem;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+    .speaker-btn:hover { color: var(--primary-dark); }
+
+    /* Stats cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.8rem;
+      margin: 3rem 0;
+    }
+    .stat-card {
+      background: white;
+      border-radius: 2rem;
+      padding: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      box-shadow: 0 15px 30px -15px #1a5e2d;
+    }
+    .stat-icon {
+      background: #def3e0;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--primary);
+    }
+    .stat-info h3 { font-size: 2rem; font-weight: 700; color: #0f4f23; }
+
+    /* Features */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    .feature-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 2rem;
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.8);
+      transition: 0.3s;
+    }
+    .feature-card:hover { transform: translateY(-8px); background: white; }
+    .feature-icon {
+      background: #e2f7e4;
+      width: 70px;
+      height: 70px;
+      border-radius: 40% 60% 40% 60%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+    }
+
+    /* Swiper */
+    .swiper { padding: 2rem 0.5rem 3rem; }
+    .swiper-button-next, .swiper-button-prev { color: var(--primary) !important; background: rgba(255,255,255,0.6); width: 42px; height: 42px; border-radius: 50%; }
+    .swiper-pagination-bullet-active { background: var(--primary) !important; }
+
+    /* Pest card */
+    .pest-card {
+      background: white;
+      border-radius: 2rem;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .pest-card:hover { transform: scale(1.02); box-shadow: 0 15px 30px -12px #1d6a32; }
+    .pest-card img { width: 100%; border-radius: 1.2rem; height: 170px; object-fit: cover; }
+
+    /* Market / Weather cards */
+    .market-card, .weather-card {
+      background: white;
+      border-radius: 1.8rem;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 10px 25px -12px #16632b;
+    }
+
+    /* Data list */
+    .data-list {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(8px);
+      border-radius: 2rem;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+    .data-list table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .data-list td {
+      padding: 0.8rem;
+      border-bottom: 1px solid #c0e0c0;
+    }
+
+    /* Chart box */
+    .chart-box {
+      background: white;
+      border-radius: 2rem;
+      padding: 1.8rem;
+      margin: 2rem 0;
+    }
+    canvas { max-height: 250px; width: 100% !important; }
+
+    /* Chatbot floating */
+    .chat-bubble {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--primary);
+      color: white;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      box-shadow: 0 15px 30px -8px #0a4a1e;
+      cursor: pointer;
+      z-index: 1100;
+      transition: 0.2s;
+    }
+    .chat-bubble:hover { transform: scale(1.1); }
+    .chat-window {
+      position: fixed;
+      bottom: 6rem;
+      right: 2rem;
+      width: 380px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border-radius: 2rem;
+      box-shadow: 0 30px 60px -15px #0f4622;
+      border: 1px solid rgba(255,255,255,0.8);
+      display: none;
+      flex-direction: column;
+      z-index: 1100;
+      overflow: hidden;
+    }
+    .chat-window.open { display: flex; }
+    .chat-header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-messages {
+      padding: 1rem;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .message { display: flex; margin-bottom: 1rem; }
+    .message.farmer { justify-content: flex-start; }
+    .message.ai { justify-content: flex-end; }
+    .bubble {
+      max-width: 80%;
+      padding: 0.8rem 1.3rem;
+      border-radius: 1.5rem;
+      font-size: 0.95rem;
+      position: relative;
+    }
+    .farmer .bubble { background: #e2f3e4; color: #0f4a20; }
+    .ai .bubble { background: var(--primary); color: white; }
+    .bubble .speaker-btn {
+      background: transparent;
+      border: none;
+      color: inherit;
+      font-size: 1rem;
+      margin-left: 0.5rem;
+      opacity: 0.8;
+    }
+    .bubble .speaker-btn:hover { opacity: 1; }
+    .chat-footer {
+      padding: 1rem;
+      border-top: 1px solid #d0e0d0;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .chat-footer input {
+      flex: 1;
+      padding: 0.7rem 1rem;
+      border: 1px solid #b8dcb8;
+      border-radius: 3rem;
+      outline: none;
+    }
+    .chat-footer button {
+      background: var(--primary);
+      border: none;
+      color: white;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 2rem;
+      max-width: 450px;
+      width: 90%;
+    }
+
+    /* Crop calendar */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+      gap: 1rem;
+    }
+    .crop-item {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(4px);
+      border-radius: 1.5rem;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    /* Footer */
+    .footer {
+      background: #0b3b1e;
+      color: #e2f3e2;
+      border-radius: 4rem 4rem 0 0;
+      padding: 3rem 2rem;
+      margin-top: 5rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo"><i class="fas fa-seedling"></i> KrishiSahay</div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#ai">AI Chat</a>
+      <a href="#schemes">Schemes</a>
+    </div>
+    <div style="display: flex; gap: 1rem; align-items: center;">
+      <select class="lang-select" id="langSwitcher">
+        <option value="en">🇬🇧 English</option>
+        <option value="hi">🇮🇳 हिन्दी</option>
+        <option value="te">🇮🇳 తెలుగు</option>
+      </select>
+    </div>
+  </nav>
+
+  <!-- Floating Chat -->
+  <div class="chat-bubble" id="chatBubble"><i class="fas fa-comment-dots"></i></div>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <span><i class="fas fa-robot"></i> Krishi Assistant</span>
+      <i class="fas fa-minus" id="chatMinimize" style="cursor:pointer;"></i>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-footer">
+      <input type="text" placeholder="Type your question..." id="chatInput">
+      <button id="chatSendBtn"><i class="fas fa-paper-plane"></i></button>
+      <button id="chatVoiceBtn" style="background:var(--secondary); color:#1f3f1f;"><i class="fas fa-microphone"></i></button>
+    </div>
+  </div>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <div class="hero-content" data-aos="fade-right">
+        <h1>Intelligent AI Assistant for Every Farmer</h1>
+        <p>Real‑time solutions for crops, pests, fertilizers, and government schemes — even offline in remote areas.</p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <div class="search-panel" style="flex: 1;">
+            <i class="fas fa-search"></i>
+            <input type="text" id="heroInput" placeholder="Ask your question...">
+            <button id="heroAskBtn">Ask AI</button>
+          </div>
+          <button class="voice-btn" id="heroVoiceBtn"><i class="fas fa-microphone"></i></button>
+        </div>
+        <!-- Hero response area (hidden initially) -->
+        <div id="heroResponseArea" class="hero-response" style="display: none;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span id="heroResponseText"></span>
+            <button class="speaker-btn" id="heroSpeakerBtn"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+        <div style="display: flex; gap: 1rem; margin-top: 1.8rem;">
+          <span class="btn-outline" style="padding: 0.5rem 1.2rem;" id="pestIDBtn"><i class="fas fa-bug"></i> Pest ID</span>
+          <span class="btn-outline" style="padding: 0.5rem 1.2rem;" id="fertilizerBtn"><i class="fas fa-flask"></i> Fertilizer</span>
+          <span class="btn-outline" style="padding: 0.5rem 1.2rem;" id="schemesBtn"><i class="fas fa-hand-holding-heart"></i> Schemes</span>
+        </div>
+      </div>
+      <div data-aos="fade-left">
+        <i class="fas fa-leaf" style="font-size: 12rem; color: #318a47; opacity: 0.4;"></i>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="stats-grid" id="dashboard">
+      <div class="stat-card" data-aos="zoom-in"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><h3>1.5M+</h3><p>Farmers</p></div></div>
+      <div class="stat-card" data-aos="zoom-in" data-aos-delay="100"><div class="stat-icon"><i class="fas fa-message"></i></div><div class="stat-info"><h3>4.2Cr</h3><p>Queries</p></div></div>
+      <div class="stat-card" data-aos="zoom-in" data-aos-delay="200"><div class="stat-icon"><i class="fas fa-tree"></i></div><div class="stat-info"><h3>150+</h3><p>Crops</p></div></div>
+      <div class="stat-card" data-aos="zoom-in" data-aos-delay="300"><div class="stat-icon"><i class="fas fa-language"></i></div><div class="stat-info"><h3>12</h3><p>Languages</p></div></div>
+    </div>
+
+    <!-- Features -->
+    <h2 class="section-title" id="features">Enterprise‑Grade Features</h2>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-robot"></i></div><h3>Generative AI</h3><p>Advanced language models trained on agricultural data.</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-wifi-slash"></i></div><h3>Offline Mode</h3><p>Full functionality without internet – cached knowledge.</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-camera"></i></div><h3>AI Pest Scanner</h3><p>Upload a photo; AI identifies diseases instantly.</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-chart-line"></i></div><h3>Market Intelligence</h3><p>Real‑time prices and trends across mandis.</p></div>
+    </div>
+
+    <!-- How It Works -->
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps">
+      <div class="step"><div class="step-icon"><i class="fas fa-microphone-alt"></i></div><h3>Ask</h3><p>Speak or type your query in your language.</p></div>
+      <div class="step"><div class="step-icon"><i class="fas fa-brain"></i></div><h3>AI Processes</h3><p>Generative AI searches knowledge base or uses offline cache.</p></div>
+      <div class="step"><div class="step-icon"><i class="fas fa-reply-all"></i></div><h3>Get Answer</h3><p>Instant, actionable solution + scheme info.</p></div>
+    </div>
+
+    <!-- Pest Scanner Carousel -->
+    <h2 class="section-title">Pest & Disease Scanner</h2>
+    <div class="swiper pestSwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="pest-card" data-pest="Wheat yellow rust – Spray Propiconazole 1ml/L"><img src="https://images.unsplash.com/photo-1574323347407-6e1c6e7c0f1a?w=400&h=300&fit=crop" alt="Wheat"><h4>Wheat yellow rust</h4></div></div>
+        <div class="swiper-slide"><div class="pest-card" data-pest="Tomato blight – Copper oxychloride 3g/L"><img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&h=300&fit=crop" alt="Tomato"><h4>Tomato blight</h4></div></div>
+        <div class="swiper-slide"><div class="pest-card" data-pest="Rice stem borer – Cartap hydrochloride"><img src="https://images.unsplash.com/photo-1599420186946-7b6fb4e297f0?w=400&h=300&fit=crop" alt="Rice"><h4>Rice stem borer</h4></div></div>
+        <div class="swiper-slide"><div class="pest-card" data-pest="Maize stalk borer – Cypermethrin"><img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400&h=300&fit=crop" alt="Maize"><h4>Maize stalk borer</h4></div></div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Market Prices (Carousel + Text List) -->
+    <h2 class="section-title">Market Prices</h2>
+    <div class="swiper marketSwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="market-card"><i class="fas fa-wheat-alt fa-3x"></i><h3>Wheat</h3><p>₹2425/q</p><small>+2%</small></div></div>
+        <div class="swiper-slide"><div class="market-card"><i class="fas fa-seedling fa-3x"></i><h3>Paddy</h3><p>₹2180/q</p><small>+1.5%</small></div></div>
+        <div class="swiper-slide"><div class="market-card"><i class="fas fa-carrot fa-3x"></i><h3>Tomato</h3><p>₹1200/q</p><small>-3%</small></div></div>
+        <div class="swiper-slide"><div class="market-card"><i class="fas fa-apple-alt fa-3x"></i><h3>Apple</h3><p>₹8500/q</p><small>+5%</small></div></div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    <div class="data-list">
+      <table>
+        <tr><td>Wheat</td><td>₹2425/quintal</td><td>+2%</td></tr>
+        <tr><td>Paddy</td><td>₹2180/quintal</td><td>+1.5%</td></tr>
+        <tr><td>Tomato</td><td>₹1200/quintal</td><td>-3%</td></tr>
+        <tr><td>Apple</td><td>₹8500/quintal</td><td>+5%</td></tr>
+      </table>
+    </div>
+
+    <!-- Weather (Carousel + Text List) -->
+    <h2 class="section-title">Weather</h2>
+    <div class="swiper weatherSwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="weather-card"><i class="fas fa-sun fa-3x"></i><h3>Delhi</h3><p>32°C Sunny</p><small>Hum 45%</small></div></div>
+        <div class="swiper-slide"><div class="weather-card"><i class="fas fa-cloud-rain fa-3x"></i><h3>Mumbai</h3><p>28°C Rain</p><small>Hum 80%</small></div></div>
+        <div class="swiper-slide"><div class="weather-card"><i class="fas fa-cloud fa-3x"></i><h3>Bangalore</h3><p>24°C Cloudy</p><small>Hum 60%</small></div></div>
+        <div class="swiper-slide"><div class="weather-card"><i class="fas fa-wind fa-3x"></i><h3>Chennai</h3><p>30°C Windy</p><small>Hum 70%</small></div></div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    <div class="data-list">
+      <table>
+        <tr><td>Delhi</td><td>32°C Sunny</td><td>Hum 45%</td></tr>
+        <tr><td>Mumbai</td><td>28°C Rain</td><td>Hum 80%</td></tr>
+        <tr><td>Bangalore</td><td>24°C Cloudy</td><td>Hum 60%</td></tr>
+        <tr><td>Chennai</td><td>30°C Windy</td><td>Hum 70%</td></tr>
+      </table>
+    </div>
+
+    <!-- Crop Calendar -->
+    <h2 class="section-title">Crop Calendar</h2>
+    <div class="calendar-grid">
+      <div class="crop-item"><i class="fas fa-seedling fa-2x"></i><h4>Wheat</h4><p>Sowing: Oct-Dec</p><p>Harvest: Mar-Apr</p></div>
+      <div class="crop-item"><i class="fas fa-seedling fa-2x"></i><h4>Rice</h4><p>Sowing: Jun-Jul</p><p>Harvest: Oct-Nov</p></div>
+      <div class="crop-item"><i class="fas fa-seedling fa-2x"></i><h4>Maize</h4><p>Sowing: Jun-Jul</p><p>Harvest: Sep-Oct</p></div>
+      <div class="crop-item"><i class="fas fa-seedling fa-2x"></i><h4>Sugarcane</h4><p>Sowing: Jan-Mar</p><p>Harvest: Nov-Dec</p></div>
+    </div>
+
+    <!-- Expert Advice Carousel (interactive) -->
+    <h2 class="section-title">Expert Advice</h2>
+    <div class="swiper expertSwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="glass-card" style="padding:1.5rem;"><i class="fas fa-quote-left fa-2x"></i> Use neem oil as a natural pesticide. Apply early morning for best results.</div></div>
+        <div class="swiper-slide"><div class="glass-card" style="padding:1.5rem;"><i class="fas fa-quote-left fa-2x"></i> Test your soil before applying fertilizers to avoid overuse.</div></div>
+        <div class="swiper-slide"><div class="glass-card" style="padding:1.5rem;"><i class="fas fa-quote-left fa-2x"></i> Practice crop rotation to maintain soil health.</div></div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Scheme Eligibility Checker -->
+    <h2 class="section-title">Scheme Eligibility Checker</h2>
+    <div style="background:rgba(255,255,255,0.7); border-radius:2rem; padding:2rem;">
+      <select id="schemeSelect" style="padding:0.8rem; border-radius:3rem; border:1px solid #b8dcb8; width:100%;">
+        <option value="pmkisan">PM-KISAN</option>
+        <option value="kcc">Kisan Credit Card</option>
+        <option value="pmfby">PM Fasal Bima Yojana</option>
+      </select>
+      <button class="btn" style="margin-top:1rem;" id="checkEligibility">Check Eligibility</button>
+      <p id="eligibilityResult" style="margin-top:1rem; font-weight:500;"></p>
+    </div>
+
+    <!-- Success Stories -->
+    <h2 class="section-title">Success Stories</h2>
+    <div style="display:flex; gap:2rem; flex-wrap:wrap;">
+      <div class="glass-card" style="padding:1.5rem; flex:1;"><i class="fas fa-user-circle fa-3x"></i><p>"Increased yield by 30% using KrishiSahay's advice." – Ramesh</p></div>
+      <div class="glass-card" style="padding:1.5rem; flex:1;"><i class="fas fa-user-circle fa-3x"></i><p>"Got PM-KISAN benefits within a week." – Sita</p></div>
+    </div>
+
+    <!-- Price Trend Chart -->
+    <div class="chart-box">
+      <h3 style="margin-bottom:1rem;"><i class="fas fa-chart-bar"></i> Wheat Price Trend (last 7 days)</h3>
+      <canvas id="priceChart"></canvas>
+    </div>
+
+    <!-- Schemes Carousel -->
+    <h2 class="section-title" id="schemes">Government Schemes</h2>
+    <div class="swiper schemesSwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="glass-card" style="padding:1.8rem; background:rgba(255,255,255,0.6);"><i class="fas fa-tractor fa-3x"></i><h3>Kisan Credit Card</h3><p>Low‑interest loan, 4% subsidy</p></div></div>
+        <div class="swiper-slide"><div class="glass-card" style="padding:1.8rem; background:rgba(255,255,255,0.6);"><i class="fas fa-hand-holding-water fa-3x"></i><h3>PM Irrigation</h3><p>55% subsidy on drip</p></div></div>
+        <div class="swiper-slide"><div class="glass-card" style="padding:1.8rem; background:rgba(255,255,255,0.6);"><i class="fas fa-seedling fa-3x"></i><h3>Food Security</h3><p>Pulses & oilseeds grant</p></div></div>
+        <div class="swiper-slide"><div class="glass-card" style="padding:1.8rem; background:rgba(255,255,255,0.6);"><i class="fas fa-bug fa-3x"></i><h3>Pest Management</h3><p>50% on bio‑pesticides</p></div></div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <h2 class="section-title">FAQ</h2>
+    <div style="margin-bottom: 3rem;">
+      <div class="faq-item glass-card" style="padding:1.2rem; margin-bottom:1rem; cursor:pointer; background:rgba(255,255,255,0.6);">
+        <div style="display:flex; justify-content:space-between;"><span>Is KrishiSahay really free?</span> <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer" style="max-height:0; overflow:hidden; transition:0.3s;">Yes, completely free for all farmers. Funded by government & non‑profits.</div>
+      </div>
+      <div class="faq-item glass-card" style="padding:1.2rem; margin-bottom:1rem; cursor:pointer; background:rgba(255,255,255,0.6);">
+        <div style="display:flex; justify-content:space-between;"><span>How accurate is pest diagnosis?</span> <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer" style="max-height:0; overflow:hidden;">Over 90% accuracy, trained on agricultural university data.</div>
+      </div>
+      <div class="faq-item glass-card" style="padding:1.2rem; margin-bottom:1rem; cursor:pointer; background:rgba(255,255,255,0.6);">
+        <div style="display:flex; justify-content:space-between;"><span>Can I use it without internet?</span> <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer" style="max-height:0; overflow:hidden;">Yes, core features work offline with cached knowledge.</div>
+      </div>
+    </div>
+
+    <!-- Testimonials Carousel -->
+    <h2 class="section-title">Farmers Love Us</h2>
+    <div class="swiper testimonialSwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="glass-card" style="padding:2rem; text-align:center; background:rgba(255,255,255,0.6);"><i class="fas fa-user-circle fa-4x"></i><p>"Sugarcane disease solution instantly"</p><h4>– Ramesh, UP</h4></div></div>
+        <div class="swiper-slide"><div class="glass-card" style="padding:2rem; text-align:center; background:rgba(255,255,255,0.6);"><i class="fas fa-user-circle fa-4x"></i><p>"Offline fertilizer advice helped"</p><h4>– Sangeeta, Nagpur</h4></div></div>
+        <div class="swiper-slide"><div class="glass-card" style="padding:2rem; text-align:center; background:rgba(255,255,255,0.6);"><i class="fas fa-user-circle fa-4x"></i><p>"Got scheme benefits easily"</p><h4>– Gurpreet, Punjab</h4></div></div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+      <div><i class="fas fa-seedling"></i> KrishiSahay · AI for Rural India</div>
+      <div><i class="fas fa-phone-alt"></i> Missed call 1800-123-456</div>
+    </div>
+    <div class="container" style="text-align:center; margin-top:2rem;">© 2026 KrishiSahay – Empowering Bharat's Farmers</div>
+  </footer>
+
+  <!-- Modal for pest -->
+  <div id="pestModal" class="modal">
+    <div class="modal-content">
+      <h3>Pest Diagnosis</h3>
+      <p id="modalText"></p>
+      <button class="btn" onclick="document.getElementById('pestModal').style.display='none'">Close</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    // OpenRouter API configuration
+    const OPENROUTER_API_KEY = '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';
+    const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
+
+    async function callOpenRouter(prompt, callback) {
+      try {
+        const response = await fetch(OPENROUTER_URL, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+            'Content-Type': 'application/json',
+            'HTTP-Referer': window.location.origin,
+            'X-Title': 'KrishiSahay'
+          },
+          body: JSON.stringify({
+            model: 'mistralai/mixtral-8x7b-instruct',
+            messages: [
+              { role: 'system', content: 'You are a helpful agricultural assistant. Provide concise, practical advice in simple language.' },
+              { role: 'user', content: prompt }
+            ],
+            max_tokens: 300
+          })
+        });
+        const data = await response.json();
+        if (data.choices && data.choices[0]) {
+          callback(data.choices[0].message.content);
+        } else {
+          callback('Sorry, I could not get an answer. Please try again.');
+        }
+      } catch (error) {
+        console.error(error);
+        callback('Network error. Please check your connection.');
+      }
+    }
+
+    // Text-to-speech function
+    function speakText(text) {
+      if (!window.speechSynthesis) {
+        alert('Text-to-speech not supported in your browser.');
+        return;
+      }
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 1;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Floating chat logic
+    const chatBubble = document.getElementById('chatBubble');
+    const chatWindow = document.getElementById('chatWindow');
+    const chatMinimize = document.getElementById('chatMinimize');
+    chatBubble.addEventListener('click', () => chatWindow.classList.toggle('open'));
+    chatMinimize.addEventListener('click', () => chatWindow.classList.remove('open'));
+
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSendBtn');
+
+    function addMessage(sender, text) {
+      const msg = document.createElement('div');
+      msg.className = `message ${sender}`;
+      const speakerIcon = sender === 'ai' ? '<button class="speaker-btn" onclick="speakText(\'' + text.replace(/'/g, "\\'") + '\')"><i class="fas fa-volume-up"></i></button>' : '';
+      msg.innerHTML = `<div class="bubble">${text} ${speakerIcon}</div>`;
+      chatMessages.appendChild(msg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function handleUserQuery(query, origin = 'chat') {
+      if (origin === 'chat') {
+        addMessage('farmer', query);
+        addMessage('ai', 'Thinking...');
+      } else {
+        // For hero/buttons, show in hero response area
+        const responseArea = document.getElementById('heroResponseArea');
+        const responseText = document.getElementById('heroResponseText');
+        responseArea.style.display = 'block';
+        responseText.innerText = 'Thinking...';
+      }
+
+      await callOpenRouter(query, (reply) => {
+        if (origin === 'chat') {
+          const lastMsg = chatMessages.querySelector('.message.ai:last-child .bubble');
+          if (lastMsg && lastMsg.childNodes[0].nodeValue === 'Thinking...') {
+            lastMsg.childNodes[0].nodeValue = reply;
+            // Add speaker button if not present
+            if (!lastMsg.querySelector('.speaker-btn')) {
+              const btn = document.createElement('button');
+              btn.className = 'speaker-btn';
+              btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+              btn.onclick = () => speakText(reply);
+              lastMsg.appendChild(btn);
+            }
+          } else {
+            addMessage('ai', reply);
+          }
+        } else {
+          const responseText = document.getElementById('heroResponseText');
+          responseText.innerText = reply;
+          // Attach speaker to hero speaker button
+          const heroSpeaker = document.getElementById('heroSpeakerBtn');
+          heroSpeaker.onclick = () => speakText(reply);
+        }
+      });
+    }
+
+    chatSend.addEventListener('click', () => {
+      const q = chatInput.value.trim();
+      if (!q) return;
+      handleUserQuery(q, 'chat');
+      chatInput.value = '';
+    });
+
+    // Voice input
+    const heroVoice = document.getElementById('heroVoiceBtn');
+    const heroInput = document.getElementById('heroInput');
+    const chatVoice = document.getElementById('chatVoiceBtn');
+    function startVoice(targetInput) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) { alert('Voice not supported'); return; }
+      const rec = new SpeechRecognition();
+      rec.lang = 'hi-IN';
+      rec.onresult = (e) => {
+        const speech = e.results[0][0].transcript;
+        if (targetInput === 'hero') heroInput.value = speech;
+        else chatInput.value = speech;
+      };
+      rec.start();
+    }
+    heroVoice.addEventListener('click', () => startVoice('hero'));
+    chatVoice.addEventListener('click', () => startVoice('chat'));
+
+    // Hero ask
+    document.getElementById('heroAskBtn').addEventListener('click', () => {
+      const q = heroInput.value;
+      if (q) {
+        handleUserQuery(q, 'hero');
+        heroInput.value = '';
+      }
+    });
+
+    // Pest ID, Fertilizer, Schemes buttons
+    document.getElementById('pestIDBtn').addEventListener('click', () => {
+      handleUserQuery('What are common pests and their organic treatments?', 'hero');
+    });
+    document.getElementById('fertilizerBtn').addEventListener('click', () => {
+      handleUserQuery('Recommend fertilizers for wheat crop with dosage.', 'hero');
+    });
+    document.getElementById('schemesBtn').addEventListener('click', () => {
+      handleUserQuery('List latest government schemes for farmers in India.', 'hero');
+    });
+
+    // Pest modal
+    const modal = document.getElementById('pestModal');
+    const modalText = document.getElementById('modalText');
+    document.querySelectorAll('.pest-card').forEach(card => {
+      card.addEventListener('click', () => {
+        modalText.innerText = card.getAttribute('data-pest');
+        modal.style.display = 'flex';
+      });
+    });
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+
+    // Scheme eligibility checker
+    document.getElementById('checkEligibility').addEventListener('click', () => {
+      const scheme = document.getElementById('schemeSelect').value;
+      let result = '';
+      if (scheme === 'pmkisan') result = 'You are eligible if you own less than 2 hectares of land.';
+      else if (scheme === 'kcc') result = 'All farmers with valid land records are eligible.';
+      else result = 'All farmers sowing notified crops are eligible.';
+      document.getElementById('eligibilityResult').innerText = result;
+    });
+
+    // Chart
+    const ctx = document.getElementById('priceChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+          label: 'Wheat ₹/quintal',
+          data: [2410, 2425, 2405, 2430, 2440, 2420, 2435],
+          borderColor: '#0e6b2e',
+          backgroundColor: 'rgba(14,107,46,0.1)',
+          tension: 0.3,
+          fill: true
+        }]
+      },
+      options: { responsive: true, plugins: { legend: { display: false } } }
+    });
+
+    // Swipers
+    new Swiper('.pestSwiper', { slidesPerView:1, spaceBetween:20, pagination:{el:'.swiper-pagination', clickable:true}, breakpoints:{640:{slidesPerView:2},1024:{slidesPerView:3}} });
+    new Swiper('.marketSwiper', { slidesPerView:1, spaceBetween:20, pagination:{el:'.swiper-pagination', clickable:true}, breakpoints:{640:{slidesPerView:2},1024:{slidesPerView:3}} });
+    new Swiper('.weatherSwiper', { slidesPerView:1, spaceBetween:20, pagination:{el:'.swiper-pagination', clickable:true}, breakpoints:{640:{slidesPerView:2},1024:{slidesPerView:3}} });
+    new Swiper('.expertSwiper', { slidesPerView:1, spaceBetween:20, pagination:{el:'.swiper-pagination', clickable:true}, breakpoints:{640:{slidesPerView:2},1024:{slidesPerView:3}} });
+    new Swiper('.schemesSwiper', { slidesPerView:1, spaceBetween:20, navigation:{nextEl:'.swiper-button-next', prevEl:'.swiper-button-prev'}, breakpoints:{640:{slidesPerView:2},1024:{slidesPerView:3}} });
+    new Swiper('.testimonialSwiper', { slidesPerView:1, spaceBetween:20, pagination:{el:'.swiper-pagination', clickable:true}, breakpoints:{640:{slidesPerView:2},1024:{slidesPerView:3}} });
+
+    // FAQ toggle
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const answer = this.querySelector('.faq-answer');
+        if (this.classList.contains('open')) {
+          answer.style.maxHeight = null;
+          this.classList.remove('open');
+        } else {
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+          this.classList.add('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
